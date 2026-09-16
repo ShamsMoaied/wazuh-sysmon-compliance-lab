@@ -40,6 +40,7 @@ Configured the Wazuh Agent to collect Sysmon Operational events:
   <log_format>eventchannel</log_format>
 </localfile>
 Restarted the Wazuh Agent and verified that Sysmon events were being received by the Wazuh Manager.
+
 ---
 Detection Validation
 Simulated Discovery Activity
