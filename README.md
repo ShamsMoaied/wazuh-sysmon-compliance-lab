@@ -66,3 +66,6 @@ nltest /dclist:
 
 ### 2. Level 8 catching the malicious `nltest` execution
 ![Wazuh Active Agent Dashboard](level8.png)
+
+### 3. Power Shell instruction  
+![Wazuh Active Agent Dashboard](power_shell.png)
