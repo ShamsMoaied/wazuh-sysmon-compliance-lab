@@ -56,6 +56,7 @@ Mapped the simulated activity to the relevant MITRE ATT&CK discovery technique b
 Compliance Reference
 The logging and monitoring capabilities were reviewed against relevant ISO/IEC 27002 logging controls and Dutch government BIO/BIO2 security requirements.
 
+---
 The Lab 
 
 ### 1. Central Wazuh Control Center showing active Windows Node
