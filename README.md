@@ -44,25 +44,11 @@ Restarted the Wazuh Agent and verified that Sysmon events were being received by
 ---
 Detection Validation
 Simulated Discovery Activity
+
 nltest /dclist:
+
 This command was used to simulate domain-controller discovery activity and generate relevant process telemetry.
 
-Investigation Flow
-nltest execution
-      ↓
-Sysmon Process Creation Event
-      ↓
-Windows Event Log
-      ↓
-Wazuh Agent
-      ↓
-Wazuh Manager
-      ↓
-Detection Rule
-      ↓
-Wazuh Alert
-      ↓
-SOC Investigation
 
 MITRE ATT&CK
 Mapped the simulated activity to the relevant MITRE ATT&CK discovery technique based on the observed behavior and Wazuh rule.
