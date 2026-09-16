@@ -64,5 +64,5 @@ nltest /dclist:
 ![Wazuh Active Agent Dashboard](dashboard.png)
 
 
-### 2. Red Security Alert catching the malicious `nltest` execution
+### 2. Level 8 catching the malicious `nltest` execution
 ![Wazuh Active Agent Dashboard](level8.png)
