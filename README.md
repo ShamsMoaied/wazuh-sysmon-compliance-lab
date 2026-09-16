@@ -20,7 +20,7 @@ The lab consists of:
 - **Detection:** Wazuh rules and alerts
 - **Framework:** MITRE ATT&CK
 
-
+---
 Implementation
 Phase 1 — Virtual Infrastructure
 Deployed the official Wazuh virtual appliance using Oracle VirtualBox.
@@ -40,10 +40,9 @@ Configured the Wazuh Agent to collect Sysmon Operational events:
   <log_format>eventchannel</log_format>
 </localfile>
 Restarted the Wazuh Agent and verified that Sysmon events were being received by the Wazuh Manager.
-
+---
 Detection Validation
 Simulated Discovery Activity
-To validate the detection pipeline, I executed:
 nltest /dclist:
 This command was used to simulate domain-controller discovery activity and generate relevant process telemetry.
 
