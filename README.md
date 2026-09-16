@@ -1,7 +1,5 @@
 # Wazuh & Sysmon SOC Monitoring Lab
 
-Project Overview
-
 This project demonstrates the deployment of a small SOC monitoring environment using Wazuh SIEM and Microsoft Sysmon.
 
 The lab consists of a Wazuh Manager running in an Ubuntu virtual machine and a Windows endpoint running the Wazuh Agent and Sysmon.
