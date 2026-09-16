@@ -1,59 +1,103 @@
-# wazuh-sysmon-compliance-lab
 # Wazuh & Sysmon SOC Monitoring Lab
 
-## 📌 Project Overview
-This project demonstrates the deployment of a localized SIEM (Wazuh) and deep endpoint monitoring system (Microsoft Sysmon) inside an isolated virtual lab environment. The purpose of this lab is to simulate real-time log ingestion, threat detection, and correlation mapping to the Dutch **BIO2 (Baseline Informatiebeveiliging Overheid)** and **ISO/IEC 27001** compliance baselines.
+Project Overview
+
+This project demonstrates the deployment of a small SOC monitoring environment using Wazuh SIEM and Microsoft Sysmon.
+
+The lab consists of a Wazuh Manager running in an Ubuntu virtual machine and a Windows endpoint running the Wazuh Agent and Sysmon.
+
+The objective is to practice Windows telemetry collection, security event monitoring, alert investigation, and MITRE ATT&CK mapping in an isolated virtual environment.
 
 ---
 
-## 🏗️ Architecture & Component Blueprint
-The entire ecosystem runs on a single physical host laptop utilizing a localized network bridge:
-- **SIEM Brain:** Wazuh Manager (v4.x) deployed inside an isolated Ubuntu Linux Virtual Machine (Oracle VirtualBox).
-- **Endpoint Microscope:** Actual Windows Laptop Host environment utilizing **Microsoft Sysmon** providing detailed Windows process, network, file and system activity.
-- **Noise Filter:** Community-standard **SwiftOnSecurity** XML configuration mapping rule sets Used to reduce unnecessary telemetry and focus monitoring on security-relevant events.
-- **Log Pipeline:** Wazuh Windows Agent channeling events over a secure background session.
+ Architecture
 
----
+The lab consists of:
 
-## 🛠️ Implementation Steps
+- **SIEM:** Wazuh Manager running in an Ubuntu VM using Oracle VirtualBox
+- **Endpoint:** Windows 11 host
+- **Endpoint Monitoring:** Microsoft Sysmon
+- **Log Collection:** Wazuh Agent
+- **Telemetry Source:** Windows Event Logs / Sysmon Operational channel
+- **Detection:** Wazuh rules and alerts
+- **Framework:** MITRE ATT&CK
 
-### Phase 1: Virtual Infrastructure
-1. Provisioned an isolated virtual environment via Oracle VirtualBox.
-2. Allocated `4GB RAM` and `2 vCPUs` to the official Wazuh Virtual Appliance (OVA).
+### Architecture
 
-### Phase 2: Endpoint Kernel Auditing (Sysmon Setup)
-1. Deployed Microsoft Sysmon directly into `C:\Sysmon`.
-2. Loaded **SwiftOnSecurity’s** optimized configuration engine to suppress 95% of safe background noise and focus telemetry strictly on anomalies.
-3. Successfully installed the kernel service using the terminal:
-   ```powershell
-   .\Sysmon64.exe -i sysmonconfig.xml -accepteula
-   ```
+Windows Endpoint
+    │
+    ├── Sysmon
+    │      ↓
+    │   Windows Event Logs
+    │      ↓
+    └── Wazuh Agent
+           ↓
+      Wazuh Manager
+           ↓
+      Wazuh Dashboard
+           ↓
+       Investigation
 
-### Phase 3: Telemetry Pipe Integration
-1. Modified the internal client configuration file (`ossec.conf`) on the Windows host to look natively into the Sysmon event logs channel:
-   ```xml
-   <localfile>
-     <location>Microsoft-Windows-Sysmon/Operational</location>
-     <log_format>eventchannel</log_format>
-   </localfile>
-   ```
-2. Initiated the connection using administrative PowerShell permissions (`Start-Service -Name Wazuh`).
+Implementation
+Phase 1 — Virtual Infrastructure
+Deployed the official Wazuh virtual appliance using Oracle VirtualBox.
+Configured the Wazuh Manager in an Ubuntu-based virtual environment.
+Connected the Windows endpoint to the Wazuh Manager through the virtual lab network.
+Phase 2 — Sysmon
+Installed Microsoft Sysmon on the Windows endpoint.
+Applied the SwiftOnSecurity Sysmon configuration to reduce unnecessary telemetry and focus on security-relevant events.
+Enabled Sysmon using:
+.\Sysmon64.exe -i sysmonconfig.xml -accepteula
+Phase 3 — Wazuh Agent Integration
 
----
+Configured the Wazuh Agent to collect Sysmon Operational events:
 
-## 🧪 Threat Hunting Validation & Compliance Mapping
+<localfile>
+  <location>Microsoft-Windows-Sysmon/Operational</location>
+  <log_format>eventchannel</log_format>
+</localfile>
 
-To verify the operational integrity of the Security Operations Center (SOC) environment, Executed nltest /dclist: to generate Windows process telemetry associated with domain-controller discovery and validate the detection pipeline.
+Restarted the Wazuh Agent and verified that Sysmon events were being received by the Wazuh Manager.
 
+Detection Validation
+Simulated Discovery Activity
 
+To validate the detection pipeline, I executed:
 
-### The SIEM Result:
-- **Detection Mechanics:** Sysmon immediately captured the suspicious process creation parameters.
-- **Log Transport:** The Wazuh agent bundled the telemetry block and shot it over the virtual connection.
-- **Manager Analysis:** The Wazuh correlation engine successfully matched the log against known adversarial behaviors, triggering a **Severity Alert (Level 8)**.
-- **Audit Value:** The incident was automatically categorized under **ISO 27002 Control 8.15 (Logging)** and cross-referenced with the standard MITRE ATT&CK matrix.
+nltest /dclist:
 
----
+This command was used to simulate domain-controller discovery activity and generate relevant process telemetry.
+
+Investigation Flow
+nltest execution
+      ↓
+Sysmon Process Creation Event
+      ↓
+Windows Event Log
+      ↓
+Wazuh Agent
+      ↓
+Wazuh Manager
+      ↓
+Detection Rule
+      ↓
+Wazuh Alert
+      ↓
+SOC Investigation
+
+Observed Evidence
+Process creation telemetry captured by Sysmon
+Command-line information
+Windows endpoint information
+Event timestamp
+Wazuh detection alert
+MITRE ATT&CK technique mapping
+
+MITRE ATT&CK
+Mapped the simulated activity to the relevant MITRE ATT&CK discovery technique based on the observed behavior and Wazuh rule.
+
+Compliance Reference
+The logging and monitoring capabilities were reviewed against relevant ISO/IEC 27002 logging controls and Dutch government BIO/BIO2 security requirements.
 
 ## 📸 Lab Evidence
 *(Pro-tip: Replace these placeholders below with screenshots from your laptop to prove you built it!)*
@@ -67,3 +111,6 @@ To verify the operational integrity of the Security Operations Center (SOC) envi
 
 ### 3. Power Shell instruction  
 ![Wazuh Active Agent Dashboard](power_shell.png)
+
+### 4. MITRE ATT&CK
+![Wazuh Active Agent Dashboard](MITRE_ATT&CK.png)
