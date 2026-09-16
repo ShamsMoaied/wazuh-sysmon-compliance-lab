@@ -106,7 +106,7 @@ The logging and monitoring capabilities were reviewed against relevant ISO/IEC 2
 ![Wazuh Active Agent Dashboard](dashboard.png)
 
 
-### 2. Level 8 catching the malicious `nltest` execution
+### 2. Level 8 catching alert (`nltest` execution)
 ![Wazuh Active Agent Dashboard](level8.png)
 
 ### 3. Power Shell instruction  
