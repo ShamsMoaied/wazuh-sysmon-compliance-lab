@@ -61,8 +61,8 @@ nltest /dclist:
 *(Pro-tip: Replace these placeholders below with screenshots from your laptop to prove you built it!)*
 
 ### 1. Central Wazuh Control Center showing active Windows Node
-
+![Wazuh Active Agent Dashboard](dashboard.png)
 
 
 ### 2. Red Security Alert catching the malicious `nltest` execution
-![Malicious Alert Placeholder](screenshots/your_red_alert_screenshot.png)
+![Wazuh Active Agent Dashboard](level 8.png)
