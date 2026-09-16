@@ -1,5 +1,5 @@
 # wazuh-sysmon-compliance-lab
-# All-In-One Enterprise SIEM Lab
+# Wazuh & Sysmon SOC Monitoring Lab
 
 ## 📌 Project Overview
 This project demonstrates the deployment of a localized SIEM (Wazuh) and deep endpoint monitoring system (Microsoft Sysmon) inside an isolated virtual lab environment. The purpose of this lab is to simulate real-time log ingestion, threat detection, and correlation mapping to the Dutch **BIO2 (Baseline Informatiebeveiliging Overheid)** and **ISO/IEC 27001** compliance baselines.
@@ -7,10 +7,10 @@ This project demonstrates the deployment of a localized SIEM (Wazuh) and deep en
 ---
 
 ## 🏗️ Architecture & Component Blueprint
-The entire ecosystem runs on a single physical host laptop utilizing a secure, localized network bridge:
+The entire ecosystem runs on a single physical host laptop utilizing a localized network bridge:
 - **SIEM Brain:** Wazuh Manager (v4.x) deployed inside an isolated Ubuntu Linux Virtual Machine (Oracle VirtualBox).
-- **Endpoint Microscope:** Actual Windows Laptop Host environment utilizing **Microsoft Sysmon** hooked deeply into the OS kernel.
-- **Noise Filter:** Community-standard **SwiftOnSecurity** XML configuration mapping rule sets.
+- **Endpoint Microscope:** Actual Windows Laptop Host environment utilizing **Microsoft Sysmon** providing detailed Windows process, network, file and system activity.
+- **Noise Filter:** Community-standard **SwiftOnSecurity** XML configuration mapping rule sets Used to reduce unnecessary telemetry and focus monitoring on security-relevant events.
 - **Log Pipeline:** Wazuh Windows Agent channeling events over a secure background session.
 
 ---
@@ -43,16 +43,14 @@ The entire ecosystem runs on a single physical host laptop utilizing a secure, l
 
 ## 🧪 Threat Hunting Validation & Compliance Mapping
 
-To verify the operational integrity of the Security Operations Center (SOC) environment, I executed a post-exploitation discovery technique used by threat actors to map corporate active directories:
+To verify the operational integrity of the Security Operations Center (SOC) environment, Executed nltest /dclist: to generate Windows process telemetry associated with domain-controller discovery and validate the detection pipeline.
 
-```powershell
-nltest /dclist:
-```
+
 
 ### The SIEM Result:
 - **Detection Mechanics:** Sysmon immediately captured the suspicious process creation parameters.
 - **Log Transport:** The Wazuh agent bundled the telemetry block and shot it over the virtual connection.
-- **Manager Analysis:** The Wazuh correlation engine successfully matched the log against known adversarial behaviors, triggering a **High-Severity Alert (Level 10+)**.
+- **Manager Analysis:** The Wazuh correlation engine successfully matched the log against known adversarial behaviors, triggering a **Severity Alert (Level 8)**.
 - **Audit Value:** The incident was automatically categorized under **ISO 27002 Control 8.15 (Logging)** and cross-referenced with the standard MITRE ATT&CK matrix.
 
 ---
